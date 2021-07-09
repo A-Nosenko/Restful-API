@@ -59,4 +59,33 @@ public class AppTest {
 
         assert resultStatistic.contains("Forbidden");
     }
+
+    @Test
+    public void getArticlesAdmin() throws Exception {
+
+        for (int i = 0; i < 100; i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            if (i > 10) {
+                calendar.add(Calendar.WEEK_OF_YEAR, -i);
+            }
+            ArticleCreateDto articleCreateDto = new ArticleCreateDto(
+                    "title_" + i,
+                    "author_" + i,
+                    "content_" + i,
+                    calendar.getTime()
+            );
+            this.restTemplate.postForLocation("http://localhost:" + port + "/article", articleCreateDto);
+        }
+
+        String resultStatistic = this.restTemplate
+                .withBasicAuth("admin", "admin")
+                .getForObject("http://localhost:" + port + "/statistic", String.class);
+
+        System.out.println("\t\t\t>>> RESULT STATISTIC FORBIDDEN:");
+        System.out.println(resultStatistic);
+        System.out.println("\t\t\t======================================================");
+
+        assert resultStatistic.contains("\"data\":11,\"success\":true");
+    }
 }
