@@ -57,7 +57,7 @@ public class AppTest {
         System.out.println(resultStatistic);
         System.out.println("\t\t\t======================================================");
 
-        assert resultStatistic.contains("Forbidden");
+        assert resultStatistic.contains("Unauthorized");
     }
 
     @Test
@@ -86,6 +86,6 @@ public class AppTest {
         System.out.println(resultStatistic);
         System.out.println("\t\t\t======================================================");
 
-        assert resultStatistic.contains("\"data\":11,\"success\":true");
+        assert resultStatistic.contains("\"success\":true");
     }
 }
